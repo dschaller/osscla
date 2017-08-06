@@ -1,6 +1,6 @@
 import os
 
-from flask import send_from_directory, redirect, url_for
+from flask import send_file, send_from_directory, redirect, url_for
 
 from osscla.app import app
 from osscla import authnz
@@ -53,10 +53,10 @@ def clas(path):
     return send_from_directory(app.config['CLA_DIRECTORY'], path)
 
 
-@app.route('{0}/bower_components/<path:path>'.format(ROUTE_PREFIX))
+@app.route('{0}/node_modules/<path:path>'.format(ROUTE_PREFIX))
 @no_cache
 def components(path):
-    return app.send_static_file(os.path.join('bower_components', path))
+    return send_file(os.path.join('../node_modules', path))
 
 
 @app.route('{0}/views/<path:path>'.format(ROUTE_PREFIX))

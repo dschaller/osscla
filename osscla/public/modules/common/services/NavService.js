@@ -1,26 +1,28 @@
-(function(angular) {
-    'use strict';
+'use strict';
 
-    angular.module('osscla.common.services.NavService', [])
+var angular = require('angular');
 
-    .service('common.NavService', [
-        '$rootScope',
-        function($rootScope) {
-            var _this = this;
-            this.viewLocation = '';
+var MODULE_NAME = 'osscla.common.services.NavService';
 
-            $rootScope.$on('$stateChangeSuccess', function(evt, state) {
-                if(state.data) {
-                    _this.viewLocation = state.data.viewLocation;
-                }
-            });
+angular.module(MODULE_NAME, [])
 
-            this.getViewLocation = function() {
-                return _this.viewLocation;
-            };
+.service('common.NavService', [
+    '$rootScope',
+    function($rootScope) {
+        var _this = this;
+        this.viewLocation = '';
 
-        }])
+        $rootScope.$on('$stateChangeSuccess', function(evt, state) {
+            if(state.data) {
+                _this.viewLocation = state.data.viewLocation;
+            }
+        });
 
-    ;
+        this.getViewLocation = function() {
+            return _this.viewLocation;
+        };
 
-})(window.angular);
+    }
+]);
+
+module.exports = MODULE_NAME;

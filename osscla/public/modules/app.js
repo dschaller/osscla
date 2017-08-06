@@ -1,32 +1,34 @@
-(function(angular) {
 'use strict';
 
-    angular.module('ossclaApp', [
-        // external libs
-        'ngRoute',
+window.$ = window.jQuery = require('jquery');
+var angular = require('angular');
 
-        // load routes
-        'osscla.routes'
-    ])
+var MODULE_NAME = 'ossclaApp';
 
-    /*
-     * Main controller
-     */
-    .controller('OssclaMainCtrl', [
-        '$scope',
-        '$log',
-        'common.UserInfo',
-        'common.ClaVersion',
-        function OssclaMainCtrl($scope, $log, UserInfo, ClaVersion) {
-            UserInfo.get().$promise.then(function(user){
-                $scope.user = user;
-            });
-            ClaVersion.get().$promise.then(function(claVersion){
-                $scope.claVersion = claVersion.cla_version;
-                $scope.claUrl = 'clas/' + $scope.claVersion;
-            });
-    }])
+angular.module(MODULE_NAME, [
+    // external libs
+    require('angular-route'),
 
-    ;
+    // load routes
+    require('./routes')
+])
 
-})(window.angular);
+/*
+ * Main controller
+ */
+.controller('OssclaMainCtrl', [
+    '$scope',
+    '$log',
+    'common.UserInfo',
+    'common.ClaVersion',
+    function OssclaMainCtrl($scope, $log, UserInfo, ClaVersion) {
+        UserInfo.get().$promise.then(function(user){
+            $scope.user = user;
+        });
+        ClaVersion.get().$promise.then(function(claVersion){
+            $scope.claVersion = claVersion.cla_version;
+            $scope.claUrl = 'clas/' + $scope.claVersion;
+        });
+}]);
+
+module.exports = MODULE_NAME;

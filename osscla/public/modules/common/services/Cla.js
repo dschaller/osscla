@@ -1,18 +1,19 @@
 /**
  * common $resources for osscla
  */
-(function(angular) {
-    'use strict';
+'use strict';
 
-    angular.module('osscla.common.services.Cla', [
-        'ngResource',
-        'osscla.common.constants'
-    ])
+var angular = require('angular');
 
-    .factory('common.ClaVersion', ['$resource', 'OSSCLA_URLS', function($resource, OSSCLA_URLS) {
-        return $resource(OSSCLA_URLS.CLAVERSION);
-    }])
+var MODULE_NAME = 'osscla.common.services.Cla';
 
-    ;
+angular.module(MODULE_NAME, [
+    require('angular-resource'),
+    require('../constants').OSSCLA_URLS
+])
 
-})(window.angular);
+.factory('common.ClaVersion', ['$resource', 'OSSCLA_URLS', function($resource, OSSCLA_URLS) {
+    return $resource(OSSCLA_URLS.CLAVERSION);
+}]);
+
+module.exports = MODULE_NAME;

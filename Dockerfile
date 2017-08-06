@@ -7,11 +7,11 @@ RUN apt-get update && \
     apt-get install -y ruby-full npm nodejs nodejs-legacy git git-core && \
     apt-get install -y python python-pip python-dev build-essential libffi-dev
 
-COPY bower.json package.json /srv/osscla/
+COPY package.json /srv/osscla/
 
 RUN gem install compass && \
-    npm install grunt-cli && \
-    npm install
+    npm install grunt-cli --no-progress&& \
+    npm install .  --no-progress
 
 RUN node_modules/grunt-cli/bin/grunt build
 

@@ -1,21 +1,22 @@
 /**
  * common $resources for osscla
  */
-(function(angular) {
-    'use strict';
+'use strict';
 
-    angular.module('osscla.common.services.UserInfo', [
-        'ngResource',
-        'osscla.common.constants'
-    ])
+var angular = require('angular');
 
-    /**
-     * Email address for currently logged-in user.
-     */
-    .factory('common.UserInfo', ['$resource', 'OSSCLA_URLS', function($resource, OSSCLA_URLS) {
-        return $resource(OSSCLA_URLS.USERINFO);
-    }])
+var MODULE_NAME = 'osscla.common.services.UserInfo';
 
-    ;
+angular.module(MODULE_NAME, [
+    require('angular-resource'),
+    require('../constants')
+])
 
-})(window.angular);
+/**
+ * Email address for currently logged-in user.
+ */
+.factory('common.UserInfo', ['$resource', 'OSSCLA_URLS', function($resource, OSSCLA_URLS) {
+    return $resource(OSSCLA_URLS.USERINFO);
+}]);
+
+module.exports = MODULE_NAME;

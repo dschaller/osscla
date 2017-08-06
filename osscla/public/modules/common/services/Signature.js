@@ -1,24 +1,25 @@
 /**
  * common $resources for osscla
  */
-(function(angular) {
-    'use strict';
+'use strict';
 
-    angular.module('osscla.common.services.Signature', [
-        'ngResource',
-        'osscla.common.constants'
-    ])
+var angular = require('angular');
 
-    .factory('common.Signature', ['$resource', 'OSSCLA_URLS', function($resource, OSSCLA_URLS) {
-        return $resource(OSSCLA_URLS.SIGNATURE, {username: '@username'}, {
-            put: {method: 'PUT', isArray: false}
-        });
-    }])
+var MODULE_NAME = 'osscla.common.services.Signature';
 
-    .factory('common.Signatures', ['$resource', 'OSSCLA_URLS', function($resource, OSSCLA_URLS) {
-        return $resource(OSSCLA_URLS.SIGNATURES);
-    }])
+angular.module(MODULE_NAME, [
+    require('angular-resource'),
+    require('../constants')
+])
 
-    ;
+.factory('common.Signature', ['$resource', 'OSSCLA_URLS', function($resource, OSSCLA_URLS) {
+    return $resource(OSSCLA_URLS.SIGNATURE, {username: '@username'}, {
+        put: {method: 'PUT', isArray: false}
+    });
+}])
 
-})(window.angular);
+.factory('common.Signatures', ['$resource', 'OSSCLA_URLS', function($resource, OSSCLA_URLS) {
+    return $resource(OSSCLA_URLS.SIGNATURES);
+}]);
+
+module.exports = MODULE_NAME;

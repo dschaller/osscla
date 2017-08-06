@@ -43,6 +43,7 @@ bower_components
 osscla/public/dist
 osscla/public/styles/*.css
 service.env
+bundle.js
 
 # Mr Developer (mac, editor, IDEs, etc)
 .mr.developer.cfg

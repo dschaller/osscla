@@ -13,7 +13,7 @@ module.exports = function (grunt) {
 
   // Configurable paths for the application
   var appConfig = {
-    app: require('./bower.json').appPath
+    app: 'osscla/public'
   };
 
   // Define the configuration for all the tasks
@@ -24,10 +24,6 @@ module.exports = function (grunt) {
 
     // Watches files for changes and runs tasks based on the changed files
     watch: {
-      bower: {
-        files: ['bower.json'],
-        tasks: ['bower:install', 'copy', 'wiredep', 'compass:app']
-      },
       js: {
         files: ['<%= project.app %>/modules/**/*.js'],
         tasks: ['newer:jshint:all']
@@ -45,24 +41,10 @@ module.exports = function (grunt) {
       }
     },
 
-    bower: {
-      options: {
-        copy: false,
-      },
-      install: {
-        options: {
-          bowerOptions: {
-            production: true
-          }
-        }
-      }
-    },
-
-    copy: {
+    browserify: {
       main: {
-        expand: true,
-        src: 'bower_components/**/*',
-        dest: '<%= project.app %>',
+          src: '<%= project.app %>/modules/app.js',
+          dest: '<%= project.app %>/bundle.js'
       }
     },
 
@@ -77,7 +59,7 @@ module.exports = function (grunt) {
         javascriptsDir: '<%= project.app %>/scripts',
         fontsDir: '<%= project.app %>/styles/fonts',
         importPath: [
-            '<%= project.app %>/bower_components',
+            'node_modules',
             '<%= project.app %>/modules'
         ],
         httpImagesPath: '/images',
@@ -124,40 +106,23 @@ module.exports = function (grunt) {
       }
     },
 
-    // Automatically inject Bower components
-    wiredep: {
-      app: {
-        src: ['<%= project.app %>/index.html'],
-        ignorePath:  /\.\.\//,
-        fileTypes: {
-          html: {
-            replace: {
-              js: '<script src="{{filePath}}"></script>'
-            }
-          }
-        }
-      }
-    },
-
     // Automatically inject app components
     injector: {
       options: {
         ignorePath: '<%= project.app %>',
-        relative: true,
+        relative: false,
         addRootSlash: false,
         destFile:'<%= project.app %>/index.html'
-      },
-      scripts: {
-        src: [
-            '<%= project.app %>/js/**/*.js',
-            '<%= project.app %>/modules/**/*.js'
-        ]
       },
       styles: {
         src: [
             '<%= project.app %>/styles/**/*.css',
-            '<%= project.app %>/bower_components/angular/angular-csp.css',
-            '<%= project.app %>/bower_components/angular-bootstrap/ui-bootstrap-csp.css'
+            'node_modules/angular/angular-csp.css',
+            'node_modules/angular-xeditable/dist/css/xeditable.css',
+            'node_modules/angular-ui-bootstrap/dist/ui-bootstrap-csp.css',
+            'node_modules/bootstrap/dist/css/bootstrap.css',
+            'node_modules/ng-tags-input/build/ng-tags-input.css',
+            'node_modules/ui-select/dist/select.css'
         ]
       }
     },
@@ -187,11 +152,9 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('build', [
-    'bower:install',
-    'copy',
     'compass:clean',
     'compass:app',
-    'wiredep',
+    'browserify',
     'injector'
   ]);
 
